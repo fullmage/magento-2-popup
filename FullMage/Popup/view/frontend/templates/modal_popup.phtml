@@ -1,0 +1,49 @@
+<?php
+$isEnabled = $block->isEnabled();
+$popupHeading = $block->getPopupHeading();
+$popupMessage = $block->getPopupMessage();
+$popupContentType = $block->getPopupContentType();
+$popupCmsBlock = $block->getPopupCmsBlock();
+?>
+<?php if ($isEnabled): ?>
+<div id="newsletter-model" style="display:none;">
+    <div class="popup_message">
+        <?php if ($popupContentType == 'custom'): ?>
+            <?php if ($popupHeading): ?>
+        <div id="popup-heading">
+                <?= $popupHeading; ?>
+        </div>
+        <?php endif; ?>
+            <?php if ($popupMessage): ?>
+        <div id="popup-form-content">
+            <div id="popup-text">
+                <?= $block->getWyswingContent($popupMessage); ?>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php else: ?>
+        <div id="popup-form-content">
+            <?php echo $this->getLayout()->createBlock(\Magento\Cms\Block\Block::class)
+            ->setBlockId($block->getCmsBlock($popupCmsBlock)->getIdentifier())->toHtml(); ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "FullMage_Popup/js/modal_popup": {
+            "isEnabled": <?= /* @escapeNotVerified */ $isEnabled ?>
+        }
+    }
+}
+</script>
+<style type="text/css">
+    .modal-popup.fullmage-popup .modal-inner-wrap {
+        top: 50%;
+        transform: translateY(-50%);
+        margin: 0 auto;
+        max-width: 800px;
+    }
+</style>

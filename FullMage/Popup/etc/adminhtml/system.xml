@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="fullmage" translate="label" sortOrder="10">
+            <label>FullMage</label>
+        </tab>
+        <section id="popup" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Popup Configuration</label>
+            <tab>fullmage</tab>
+            <resource>FullMage_Popup::popup_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="setcontent" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Option for Display Content</label>
+                    <source_model>FullMage\Popup\Model\Config\Source\Options</source_model>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="blockidentifer" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select CMS Block</label>
+                    <source_model>FullMage\Popup\Model\Config\Source\CmsBlockList</source_model>
+                    <comment>Select your block which you want to display content in popup.</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="setcontent">cms_block</field>
+                    </depends>
+                </field>
+                <field id="heading" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Heading</label>
+                    <depends>
+                        <field id="setcontent">custom</field>
+                    </depends>
+                </field>
+                <field id="message" translate="label" type="editor" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Message</label>
+                    <frontend_model>FullMage\Popup\Block\Adminhtml\System\Config\Form\Field\Editor</frontend_model>
+                    <depends>
+                        <field id="setcontent">custom</field>
+                    </depends>
+                </field>
+                <field id="image_upload" translate="label" type="image" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Image Upload</label>
+                    <backend_model>FullMage\Popup\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">popup</base_url>
+                    <comment><![CDATA[Allowed file types: jpg, jpeg, gif, png, svg]]></comment>
+                    <depends>
+                        <field id="setcontent">image_upload</field>
+                    </depends>
+                </field>
+                <field id="show_footer" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Footer in Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="button_color_field" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Button Background Color</label>
+                    <comment><![CDATA[Select Footer Button Background Color]]></comment>
+                    <frontend_model>FullMage\Popup\Block\Color</frontend_model>
+                    <depends>
+                        <field id="show_footer">1</field>
+                    </depends>
+                </field>
+                <field id="button_font_color_field" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Button Font Color</label>
+                    <comment><![CDATA[Select Footer Button Font Color]]></comment>
+                    <frontend_model>FullMage\Popup\Block\Color</frontend_model>
+                    <depends>
+                        <field id="show_footer">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
