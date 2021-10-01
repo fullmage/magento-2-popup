@@ -3,10 +3,15 @@
 namespace FullMage\Popup\Block;
 
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\UrlInterface;
 
 class Popup extends \Magento\Framework\View\Element\Template
 {
     const POPUP_ENABLED = 'popup/general/enable';
+
+    const POPUP_WIDTH = 'popup/general/popup_width';
+
+    const POPUP_HEIGHT = 'popup/general/popup_height';
 
     const POPUP_SETCONTENT_TYPE = 'popup/general/setcontent';
 
@@ -18,6 +23,25 @@ class Popup extends \Magento\Framework\View\Element\Template
 
     const FOOTER_ENABLED = 'popup/general/show_footer';
 
+    const BUTTON_BG_COLOR = 'popup/general/button_color_field';
+
+    const BUTTON_FONT_COLOR = 'popup/general/button_font_color_field';
+
+    const BUTTON_TEXT = 'popup/general/button_text';
+
+    const IMAGE_UPLOAD = 'popup/general/image_upload';
+
+    const SHOW_NEWSLETTER = 'popup/general/show_newsletter';
+
+    const NEWSLETTER_FONT_COLOR = 'popup/general/newsletter_font_color';
+
+    const NEWSLETTER_BUTTON_FONT = 'popup/general/newsletter_button_font_color';
+
+    const NEWSLETTER_PLACEHOLDER = 'popup/general/newsletter_textbox_placeholder';
+
+    const NEWSLETTER_LABEL_TEXT = 'popup/general/newsletter_label_text';
+
+    const NEWSLETTER_BUTTON_TEXT = 'popup/general/newsletter_button_text';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -35,22 +59,22 @@ class Popup extends \Magento\Framework\View\Element\Template
     protected $storeManager;
 
     /**
-     * @var \Magento\Cms\Api\BlockRepositoryInterface
+     * @var \Magento\Cms\Model\BlockFactory
      */
-    protected $blockRepository;
+    protected $blockFactory;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Cms\Model\Template\FilterProvider $filterProvider,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
+        \Magento\Cms\Model\BlockFactory $blockFactory,
         array $data = []
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->filterProvider = $filterProvider;
         $this->storeManager = $storeManager;
-        $this->blockRepository = $blockRepository;
+        $this->blockFactory = $blockFactory;
         parent::__construct($context, $data);
     }
 
@@ -68,6 +92,16 @@ class Popup extends \Magento\Framework\View\Element\Template
         return $this->getConfig(self::POPUP_ENABLED);
     }
 
+    public function getPopupWidth()
+    {
+        return $this->getConfig(self::POPUP_WIDTH);
+    }
+
+    public function getPopupHeight()
+    {
+        return $this->getConfig(self::POPUP_HEIGHT);
+    }
+
     public function getPopupHeading()
     {
         return $this->getConfig(self::POPUP_HEADING);
@@ -78,14 +112,76 @@ class Popup extends \Magento\Framework\View\Element\Template
         return $this->getConfig(self::POPUP_MESSAGE);
     }
 
+    public function getPopupCmsBlock()
+    {
+        return $this->getConfig(self::POPUP_CMS_BLOCK);
+    }
+
     public function getPopupContentType()
     {
         return $this->getConfig(self::POPUP_SETCONTENT_TYPE);
     }
 
-    public function getPopupCmsBlock()
+    public function getButtonText()
     {
-        return $this->getConfig(self::POPUP_CMS_BLOCK);
+        return $this->getConfig(self::BUTTON_TEXT);
+    }
+
+    public function getButtonFontColor()
+    {
+        return $this->getConfig(self::BUTTON_FONT_COLOR);
+    }
+
+    public function getButtonBgColor()
+    {
+        return $this->getConfig(self::BUTTON_BG_COLOR);
+    }
+
+    public function getShowNewsletter()
+    {
+        return $this->getConfig(self::SHOW_NEWSLETTER);
+    }
+
+    public function getNewsletterFontColor()
+    {
+        return $this->getConfig(self::NEWSLETTER_FONT_COLOR);
+    }
+
+    public function getNewsletterButtonColor()
+    {
+        return $this->getConfig(self::NEWSLETTER_BUTTON_FONT);
+    }
+
+    public function getNewsletterPlaceholder()
+    {
+        return $this->getConfig(self::NEWSLETTER_PLACEHOLDER);
+    }
+
+    public function getNewsletterLabelText()
+    {
+        return $this->getConfig(self::NEWSLETTER_LABEL_TEXT);
+    }
+
+    public function getNewsletterButtonText()
+    {
+        return $this->getConfig(self::NEWSLETTER_BUTTON_TEXT);
+    }
+
+    public function isFooterEnabled()
+    {
+        return $this->getConfig(self::FOOTER_ENABLED);
+    }
+
+    public function getFormActionUrl()
+    {
+        return $this->getUrl('newsletter/subscriber/new', ['_secure' => true]);
+    }
+
+    public function getImageUrl()
+    {
+        $imagePath = $this->getConfig(self::IMAGE_UPLOAD);
+        $mediaPath = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
+        return $mediaPath.'popup/'.$imagePath;
     }
 
     public function getWyswingContent($content)
@@ -94,19 +190,15 @@ class Popup extends \Magento\Framework\View\Element\Template
         return $this->filterProvider->getBlockFilter()->setStoreId($storeId)->filter($content);
     }
 
-    public function isFooterEnabled()
-    {
-        return $this->getConfig(self::FOOTER_ENABLED);
-    }
-
     public function getCmsBlock($blockId)
     {
-        $cmsBlock = $this->blockRepository->getById($blockId);
-        
-        if (!$cmsBlock->getId()) {
-            throw new NoSuchEntityException(__('The CMS block with the "%1" ID doesn\'t exist.', $blockId));
+        try {
+            $storeId = $this->storeManager->getStore()->getId();
+            $content = $this->blockFactory->create()->setStoreId($storeId)->load($blockId);
+        } catch (NoSuchEntityException $e) {
+            $content = false;
         }
 
-        return $cmsBlock;
+        return $content;
     }
 }

@@ -13,14 +13,18 @@ define([
                 title: '',
                 modalClass: 'fullmage-popup',
                 buttons: [{
-                    text: $.mage.__('Close'),
+                    text: $.mage.__(''+config.button1Text),
                     class: 'action',
                     click: function () {
                         this.closeModal();
                     }
                 }],
                 opened: function($Event) {
-                    // $(".modal-footer").hide();
+                    if(config.isFooterEnabled == 1) {
+                        $(".modal-footer").show();
+                    } else {
+                        $(".modal-footer").hide();
+                    }
                 },
                 closed: function () {
                     setCookie('fullmage_custom_popup',1,365);
@@ -53,6 +57,10 @@ define([
             {
                 $("#newsletter-model").modal("openModal");
             }
+            $('#fullmage-newsletter-validate-detail').submit(function() {
+                $("#newsletter-model").modal("closeModal");
+                setCookie('fullmage_custom_popup',1,365);
+            });
             $(document).keydown(function(event) { 
               if (event.keyCode == 27) { 
                 $("#newsletter-model").modal("closeModal");

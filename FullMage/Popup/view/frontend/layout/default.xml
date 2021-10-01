@@ -8,7 +8,7 @@
         <referenceContainer name="before.body.end">
             <block 	class="FullMage\Popup\Block\Popup" after="-"
             		name="fullmage_custom_popup"
-            		template="FullMage_Popup::model_popup.phtml" />
+            		template="FullMage_Popup::modal_popup.phtml" />
         </referenceContainer>
     </body>
 </page>

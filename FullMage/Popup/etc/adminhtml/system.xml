@@ -16,7 +16,23 @@
                     <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="setcontent" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="popup_width" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Width</label>
+                    <comment><![CDATA[Set width of popup in px. For eg : 800. By default it will set 800px.]]></comment>
+                    <validate>validate-number</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="popup_height" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Popup Height</label>
+                    <comment><![CDATA[Set height of popup in px. For eg : 500. By default it will set 500px.]]></comment>
+                    <validate>validate-number</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="setcontent" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Select Option for Display Content</label>
                     <source_model>FullMage\Popup\Model\Config\Source\Options</source_model>
                     <validate>required-entry</validate>
@@ -24,7 +40,7 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
-                <field id="blockidentifer" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="blockidentifer" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Select CMS Block</label>
                     <source_model>FullMage\Popup\Model\Config\Source\CmsBlockList</source_model>
                     <comment>Select your block which you want to display content in popup.</comment>
@@ -33,20 +49,20 @@
                         <field id="setcontent">cms_block</field>
                     </depends>
                 </field>
-                <field id="heading" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="heading" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Heading</label>
                     <depends>
                         <field id="setcontent">custom</field>
                     </depends>
                 </field>
-                <field id="message" translate="label" type="editor" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="message" translate="label" type="editor" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Message</label>
                     <frontend_model>FullMage\Popup\Block\Adminhtml\System\Config\Form\Field\Editor</frontend_model>
                     <depends>
                         <field id="setcontent">custom</field>
                     </depends>
                 </field>
-                <field id="image_upload" translate="label" type="image" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="image_upload" translate="label" type="image" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Image Upload</label>
                     <backend_model>FullMage\Popup\Model\Config\Backend\Image</backend_model>
                     <base_url type="media" scope_info="1">popup</base_url>
@@ -55,11 +71,12 @@
                         <field id="setcontent">image_upload</field>
                     </depends>
                 </field>
-                <field id="show_footer" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="show_footer" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Footer in Popup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Footer will not display in Image Upload display content type.]]></comment>
                 </field>
-                <field id="button_color_field" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="button_color_field" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Background Color</label>
                     <comment><![CDATA[Select Footer Button Background Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
@@ -67,12 +84,64 @@
                         <field id="show_footer">1</field>
                     </depends>
                 </field>
-                <field id="button_font_color_field" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="button_font_color_field" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Font Color</label>
                     <comment><![CDATA[Select Footer Button Font Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
                     <depends>
                         <field id="show_footer">1</field>
+                    </depends>
+                </field>
+                <field id="button_text" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Button Text</label>
+                    <comment>Set Text for Button</comment>
+                    <depends>
+                        <field id="show_footer">1</field>
+                    </depends>
+                </field>
+                <field id="show_newsletter" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Newsletter Subscribe Form in Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="setcontent">image_upload</field>
+                    </depends>
+                </field>
+                <field id="newsletter_font_color" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter Label Font Color</label>
+                    <comment><![CDATA[Select Newsletter Label Font Color]]></comment>
+                    <frontend_model>FullMage\Popup\Block\Color</frontend_model>
+                    <depends>
+                        <field id="show_newsletter">1</field>
+                        <field id="setcontent">image_upload</field>
+                    </depends>
+                </field>
+                <field id="newsletter_button_font_color" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter Button Font Color</label>
+                    <comment><![CDATA[Select Newsletter Button Font Color]]></comment>
+                    <frontend_model>FullMage\Popup\Block\Color</frontend_model>
+                    <depends>
+                        <field id="show_newsletter">1</field>
+                    </depends>
+                </field>
+                <field id="newsletter_label_text" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter Label Text</label>
+                    <comment><![CDATA[Set Value of Newsletter Label Text]]></comment>
+                    <depends>
+                        <field id="show_newsletter">1</field>
+                    </depends>
+                </field>
+                <field id="newsletter_textbox_placeholder" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter Textbox Placeholder</label>
+                    <comment><![CDATA[Set Value of Newsletter Textbox Placeholder]]></comment>
+                    <depends>
+                        <field id="show_newsletter">1</field>
+                    </depends>
+                </field>
+                <field id="newsletter_button_text" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Newsletter Button Text</label>
+                    <comment><![CDATA[Set Value of Newsletter Button Text]]></comment>
+                    <depends>
+                        <field id="show_newsletter">1</field>
                     </depends>
                 </field>
             </group>
