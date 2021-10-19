@@ -7,36 +7,56 @@ $popupMessage = $block->getPopupMessage();
 $popupContentType = $block->getPopupContentType();
 $popupCmsBlock = $block->getPopupCmsBlock();
 $isFooterEnabled = $block->isFooterEnabled();
-$buttonBgColor = $block->getButtonBgColor();
-$buttonFontColor = $block->getButtonFontColor();
-$button1Text = $block->getButton1Text();
-$button2Text = $block->getButton2Text();
 $imageUrl = $block->getImageUrl();
 $isShowNewsletter = $block->getShowNewsletter();
+$popupShowTime = $block->getPopupShowTime();
+$popupWhereToShow = $block->getPopupWhereToShow();
+$popupCookieExp = $block->getPopupCookieExpire();
+$fullActionName = $block->getFullActionName();
+$buttonText = $block->getButtonText() ? $block->getButtonText() : 'Close';
+$buttonBgColor = $block->getButtonBgColor() ? "#".$block->getButtonBgColor() : '#ffffff';
+$buttonFontColor = $block->getButtonFontColor() ? "#".$block->getButtonFontColor() : '#333';
 $newsletterFontColor = $block->getNewsletterFontColor() ? "#".$block->getNewsletterFontColor() : '#ffffff';
 $newsletterButtonColor = $block->getNewsletterButtonColor() ? "#".$block->getNewsletterButtonColor() : '#1979c3';
-$newsletterPlaceholder = $block->getNewsletterPlaceholder() ? $block->getNewsletterPlaceholder() : 'Enter your email address';
-$newsletterLabelText = $block->getNewsletterLabelText() ? $block->getNewsletterLabelText() : 'Sign Up for Our Newsletter:';
-$newsletterButtonText = $block->getNewsletterButtonText() ? $block->getNewsletterButtonText() : 'Subscribe';
+$newsletterPlaceholder = $block->getNewsletterPlaceholder()
+                        ? $block->getNewsletterPlaceholder()
+                        : 'Enter your email address';
+$newsletterLabelText = $block->getNewsletterLabelText()
+                        ? $block->getNewsletterLabelText()
+                        : 'Sign Up for Our Newsletter:';
+$newsletterButtonText = $block->getNewsletterButtonText()
+                        ? $block->getNewsletterButtonText()
+                        : 'Subscribe';
+$imagePath = "none";
+$newsletterCls = "";
+if ($popupContentType == 'newsletter_sign_up') {
+    $imagePath = $block->getImageUrl();
+}
 ?>
 <?php if ($isEnabled): ?>
-<div id="newsletter-model" style="display:none;">
+    <?php if (($popupWhereToShow == "homepage" && $fullActionName == "cms_index_index")
+    || ($popupWhereToShow == "allpage")): ?>
+        <?php if ($isShowNewsletter && $popupContentType == "newsletter_sign_up"): ?>
+    <div id="newsletter-model" class="newsletter-form" style="display:none;">
+    <?php else: ?>
+    <div id="newsletter-model" style="display:none;">
+    <?php endif; ?>
     <div class="popup_message">
         <?php if ($popupContentType == 'custom'): ?>
             <?php if ($popupHeading): ?>
-        <div id="popup-heading">
-                <?= $block->escapeHtml($popupHeading); ?>
-        </div>
-        <?php endif; ?>
-            <?php if ($popupMessage): ?>
-        <div id="popup-form-content">
-            <div id="popup-text">
-                <?= /* @noEscape */ $block->getWyswingContent($popupMessage); ?>
+            <div id="popup-heading" class="popup-heading">
+                <?= /* @noEscape */ $block->getWyswingContent($popupHeading); ?>
             </div>
-        </div>
+            <?php endif; ?>
+            <?php if ($popupMessage): ?>
+            <div id="popup-form-content" class="popup-form-content">
+                <div id="popup-text">
+                    <?= /* @noEscape */ $block->getWyswingContent($popupMessage); ?>
+                </div>
+            </div>
+            <?php endif; ?>
         <?php endif; ?>
-        <?php endif; ?>
-        <?php if ($popupContentType == "image_upload"): ?>
+        <?php if ($popupContentType == "newsletter_sign_up"): ?>
             <?php if ($isShowNewsletter): ?>
             <div class="fullmage-block newsletter">
                 <div class="fullmage-content">
@@ -81,16 +101,20 @@ $newsletterButtonText = $block->getNewsletterButtonText() ? $block->getNewslette
         <?php endif; ?>
     </div>
 </div>
+    <?php endif; ?>
 <?php endif; ?>
 <script type="text/x-magento-init">
 {
     "*": {
         "FullMage_Popup/js/modal_popup": {
             "isEnabled": "<?= /* @noEscape */ $isEnabled ?>",
+            "setcontent": "<?= /* @noEscape */ $popupContentType ?>",
             "isFooterEnabled": "<?= /* @noEscape */ $isFooterEnabled ?>",
             "buttonBgColor": "<?= /* @noEscape */ $buttonBgColor ?>",
             "buttonFontColor": "<?= /* @noEscape */ $buttonFontColor ?>",
-            "button1Text": "<?= /* @noEscape */ $button1Text ?>"
+            "buttonText": "<?= /* @noEscape */ $buttonText ?>",
+            "popupShowTime": "<?= /* @noEscape */ $popupShowTime ?>",
+            "popupCookieExp": "<?= /* @noEscape */ $popupCookieExp ?>"
         }
     }
 }
@@ -112,7 +136,7 @@ $newsletterButtonText = $block->getNewsletterButtonText() ? $block->getNewslette
     transform: translateY(-50%);
     margin: 0 auto;
     max-width: <?= /* @noEscape */ $popupWidth; ?>;
-    background-image: url(<?= /* @noEscape */ $block->getImageUrl(); ?>);
+    background-image: url(<?= /* @noEscape */ $imagePath; ?>);
     height: <?= /* @noEscape */ $popupHeight; ?>;
     max-height: 90%;
     background-repeat: no-repeat;
@@ -129,7 +153,13 @@ $newsletterButtonText = $block->getNewsletterButtonText() ? $block->getNewslette
 .modal-popup.fullmage-popup .action-close:before {
     color: #fff;
 }
-#newsletter-model {
+.modal-popup.fullmage-popup .modal-footer .fullmage-popup-btn-action
+{
+    background: <?= /* @noEscape */ $buttonBgColor; ?>;
+    color: <?= /* @noEscape */ $buttonFontColor; ?>;
+    border: 1px solid <?= /* @noEscape */ $buttonBgColor; ?>;
+}
+.newsletter-form {
     transform: translateX(-50%);
     display: block;
     margin: 0 auto;
@@ -137,6 +167,9 @@ $newsletterButtonText = $block->getNewsletterButtonText() ? $block->getNewslette
     position: absolute;
     bottom: 20%;
     left: 50%;
+}
+.popup-heading {
+    margin-bottom: 5%;
 }
 .fullmage-content .form.subscribe {
     max-width: 400px;

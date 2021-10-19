@@ -3,6 +3,7 @@
     "description": "FullMage Dynamic Popup Module for Magento 2",
     "type": "magento2-module",
     "license": "OSL-3.0",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Mage2Gen",

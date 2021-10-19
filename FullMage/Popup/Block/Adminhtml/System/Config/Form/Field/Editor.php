@@ -31,7 +31,11 @@ class Editor extends FormField
     protected function _getElementHtml(AbstractElement $element)
     {
         $element->setWysiwyg(true);
-        $element->setConfig($this->_wysiwygConfig->getConfig($element));
+        $element->setConfig($this->_wysiwygConfig->getConfig([
+            'add_variables' => false,
+            'add_widgets' => false,
+            'add_images' => true,
+        ]));
         return parent::_getElementHtml($element);
     }
 }

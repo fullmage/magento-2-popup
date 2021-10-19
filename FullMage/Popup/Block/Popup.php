@@ -43,6 +43,12 @@ class Popup extends \Magento\Framework\View\Element\Template
 
     const NEWSLETTER_BUTTON_TEXT = 'popup/general/newsletter_button_text';
 
+    const POPUP_SHOW_TIME = 'popup/general/delay';
+
+    const POPUP_WHERE_TO_SHOW = 'popup/general/wheretoshow';
+
+    const POPUP_COOKIE_EXP = 'popup/general/cookieexp';
+
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
@@ -63,18 +69,25 @@ class Popup extends \Magento\Framework\View\Element\Template
      */
     protected $blockFactory;
 
+    /**
+     * @var \Magento\Framework\App\Request\Http
+     */
+    protected $request;
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Cms\Model\Template\FilterProvider $filterProvider,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Cms\Model\BlockFactory $blockFactory,
+        \Magento\Framework\App\Request\Http $request,
         array $data = []
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->filterProvider = $filterProvider;
         $this->storeManager = $storeManager;
         $this->blockFactory = $blockFactory;
+        $this->request = $request;
         parent::__construct($context, $data);
     }
 
@@ -172,6 +185,21 @@ class Popup extends \Magento\Framework\View\Element\Template
         return $this->getConfig(self::FOOTER_ENABLED);
     }
 
+    public function getPopupShowTime()
+    {
+        return $this->getConfig(self::POPUP_SHOW_TIME);
+    }
+
+    public function getPopupWhereToShow()
+    {
+        return $this->getConfig(self::POPUP_WHERE_TO_SHOW);
+    }
+
+    public function getPopupCookieExpire()
+    {
+        return $this->getConfig(self::POPUP_COOKIE_EXP);
+    }
+
     public function getFormActionUrl()
     {
         return $this->getUrl('newsletter/subscriber/new', ['_secure' => true]);
@@ -200,5 +228,10 @@ class Popup extends \Magento\Framework\View\Element\Template
         }
 
         return $content;
+    }
+
+    public function getFullActionName()
+    {
+        return $this->request->getFullActionName();
     }
 }

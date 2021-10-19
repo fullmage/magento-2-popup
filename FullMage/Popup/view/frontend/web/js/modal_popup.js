@@ -13,25 +13,33 @@ define([
                 title: '',
                 modalClass: 'fullmage-popup',
                 buttons: [{
-                    text: $.mage.__(''+config.button1Text),
-                    class: 'action',
+                    text: $.mage.__(''+config.buttonText),
+                    class: 'fullmage-popup-btn-action',
                     click: function () {
                         this.closeModal();
                     }
                 }],
                 opened: function($Event) {
-                    if(config.isFooterEnabled == 1) {
+                    if(config.isFooterEnabled == 1 && config.setcontent != "newsletter_sign_up") {
                         $(".modal-footer").show();
                     } else {
                         $(".modal-footer").hide();
                     }
+                    var popupShowTime = config.popupShowTime;
+                    if(popupShowTime != "") {
+                        setTimeout(function(){
+                            $("#newsletter-model").modal("closeModal");
+                            setLocalStorage();
+                        }, 3000);
+                    }
                 },
                 closed: function () {
-                    setCookie('fullmage_custom_popup',1,365);
+                    setCookie('fullmage_custom_popup',1,1);
+                    setLocalStorage();
                 }
             };
 
-            function setCookie(name,value,days){
+            function setCookie(name,value,days) {
                 var expires = "";
                 if (days) {
                     var date = new Date();
@@ -41,7 +49,7 @@ define([
                 document.cookie = name + "=" + (value || "")  + expires + "; path=/";
             };
 
-            function getCookie(name){
+            function getCookie(name) {
                 var nameEQ = name + "=";
                 var ca = document.cookie.split(';');
                 for(var i=0;i < ca.length;i++) {
@@ -52,19 +60,43 @@ define([
                 return null;
             };
 
+            function setLocalStorage() {
+                if(config.popupCookieExp != "")
+                {
+                    var date = new Date(); 
+                    date.setDate(date. getDate() + parseInt(config.popupCookieExp)); 
+                    var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+                            .toISOString()
+                            .split("T")[0];
+                    if(localStorage.getItem('expiredate') == null)
+                    {
+                        localStorage.setItem('expiredate',dateString);
+                    }
+                }
+            };
+            
             var popup = modal(options, $('#newsletter-model'));
-            if(getCookie('fullmage_custom_popup') == null)
-            {
+            var CurrentDate = new Date();
+            var GivenDate = localStorage.getItem('expiredate');
+            if(config.popupCookieExp != "") {
+                if(GivenDate < CurrentDate) {
+                    $("#newsletter-model").modal("openModal");
+                }
+            }
+
+            if(getCookie('fullmage_custom_popup') == null) {
                 $("#newsletter-model").modal("openModal");
             }
             $('#fullmage-newsletter-validate-detail').submit(function() {
                 $("#newsletter-model").modal("closeModal");
-                setCookie('fullmage_custom_popup',1,365);
+                setCookie('fullmage_custom_popup',1,1);
+                setLocalStorage();
             });
             $(document).keydown(function(event) { 
               if (event.keyCode == 27) { 
                 $("#newsletter-model").modal("closeModal");
-                setCookie('fullmage_custom_popup',1,365);
+                setCookie('fullmage_custom_popup',1,1);
+                setLocalStorage();
               }
             });
         }

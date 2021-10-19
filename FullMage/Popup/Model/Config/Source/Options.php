@@ -10,7 +10,7 @@ class Options implements \Magento\Framework\Option\ArrayInterface
             ['value' => '', 'label' => __('-- Select an Option --')],
             ['value' => 'custom', 'label' => __('Custom')],
             ['value' => 'cms_block', 'label' => __('From CMS Block')],
-            ['value' => 'image_upload', 'label' => __('Image Upload')]
+            ['value' => 'newsletter_sign_up', 'label' => __('Simple Newsletter Sign Up')]
         ];
     }
 
@@ -20,7 +20,7 @@ class Options implements \Magento\Framework\Option\ArrayInterface
             '' => __('-- Select an Option --'),
             'custom' => __('Custom'),
             'cms_block' => __('From CMS Block'),
-            'image_upload' => __('Image Upload')
+            'newsletter_sign_up' => __('Simple Newsletter Sign Up')
         ];
     }
 }

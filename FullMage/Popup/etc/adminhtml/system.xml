@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="fullmage" translate="label" sortOrder="10">
+        <tab id="fullmage" translate="label" sortOrder="10" class="fullmage-tab">
             <label>FullMage</label>
         </tab>
         <section id="popup" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -32,15 +32,41 @@
                         <field id="enable">1</field>
                     </depends>
                 </field>
-                <field id="setcontent" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Select Option for Display Content</label>
+                <field id="wheretoshow" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Where to Show</label>
+                    <source_model>FullMage\Popup\Model\Config\Source\WhereToShow</source_model>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="delay" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>After X seconds</label>
+                    <validate>validate-digits</validate>
+                    <comment>
+                        <![CDATA[How many seconds you'd like to wait before displaying the popup.  If this field is blank it will display on page load with no delay.]]>
+                    </comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="cookieexp" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Popup Again to the Same Visitor after How Many Days?</label>
+                    <validate>validate-digits</validate>
+                    <comment><![CDATA[Set the value of how many days before showing the popup again to the same visitor. By default if this field is left blank once the popup is closed by a visitor it will not show again for 1 day (24 hours)]]></comment>
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+                <field id="setcontent" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select Content to Display</label>
                     <source_model>FullMage\Popup\Model\Config\Source\Options</source_model>
                     <validate>required-entry</validate>
                     <depends>
                         <field id="enable">1</field>
                     </depends>
                 </field>
-                <field id="blockidentifer" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="blockidentifer" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Select CMS Block</label>
                     <source_model>FullMage\Popup\Model\Config\Source\CmsBlockList</source_model>
                     <comment>Select your block which you want to display content in popup.</comment>
@@ -49,34 +75,34 @@
                         <field id="setcontent">cms_block</field>
                     </depends>
                 </field>
-                <field id="heading" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="heading" translate="label" type="textarea" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Heading</label>
                     <depends>
                         <field id="setcontent">custom</field>
                     </depends>
                 </field>
-                <field id="message" translate="label" type="editor" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="message" translate="label" type="editor" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Message</label>
                     <frontend_model>FullMage\Popup\Block\Adminhtml\System\Config\Form\Field\Editor</frontend_model>
                     <depends>
                         <field id="setcontent">custom</field>
                     </depends>
                 </field>
-                <field id="image_upload" translate="label" type="image" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="image_upload" translate="label" type="image" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Image Upload</label>
                     <backend_model>FullMage\Popup\Model\Config\Backend\Image</backend_model>
                     <base_url type="media" scope_info="1">popup</base_url>
                     <comment><![CDATA[Allowed file types: jpg, jpeg, gif, png, svg]]></comment>
                     <depends>
-                        <field id="setcontent">image_upload</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="show_footer" translate="label" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Show Footer in Popup</label>
+                <field id="show_footer" translate="label" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Footer Button in Popup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment><![CDATA[Footer will not display in Image Upload display content type.]]></comment>
+                    <comment><![CDATA[The footer button will not display if you're using the Simple Newsletter Sign Up option as Display Content]]></comment>
                 </field>
-                <field id="button_color_field" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="button_color_field" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Background Color</label>
                     <comment><![CDATA[Select Footer Button Background Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
@@ -84,7 +110,7 @@
                         <field id="show_footer">1</field>
                     </depends>
                 </field>
-                <field id="button_font_color_field" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="button_font_color_field" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Font Color</label>
                     <comment><![CDATA[Select Footer Button Font Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
@@ -92,56 +118,60 @@
                         <field id="show_footer">1</field>
                     </depends>
                 </field>
-                <field id="button_text" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="button_text" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Text</label>
                     <comment>Set Text for Button</comment>
                     <depends>
                         <field id="show_footer">1</field>
                     </depends>
                 </field>
-                <field id="show_newsletter" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="show_newsletter" translate="label" type="select" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Show Newsletter Subscribe Form in Popup</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <depends>
-                        <field id="setcontent">image_upload</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="newsletter_font_color" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="newsletter_font_color" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Newsletter Label Font Color</label>
                     <comment><![CDATA[Select Newsletter Label Font Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
                     <depends>
                         <field id="show_newsletter">1</field>
-                        <field id="setcontent">image_upload</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="newsletter_button_font_color" translate="label" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="newsletter_button_font_color" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Newsletter Button Font Color</label>
                     <comment><![CDATA[Select Newsletter Button Font Color]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
                     <depends>
                         <field id="show_newsletter">1</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="newsletter_label_text" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="newsletter_label_text" translate="label" type="text" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Newsletter Label Text</label>
                     <comment><![CDATA[Set Value of Newsletter Label Text]]></comment>
                     <depends>
                         <field id="show_newsletter">1</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="newsletter_textbox_placeholder" translate="label" type="text" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="newsletter_textbox_placeholder" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Newsletter Textbox Placeholder</label>
                     <comment><![CDATA[Set Value of Newsletter Textbox Placeholder]]></comment>
                     <depends>
                         <field id="show_newsletter">1</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
-                <field id="newsletter_button_text" translate="label" type="text" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="newsletter_button_text" translate="label" type="text" sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Newsletter Button Text</label>
                     <comment><![CDATA[Set Value of Newsletter Button Text]]></comment>
                     <depends>
                         <field id="show_newsletter">1</field>
+                        <field id="setcontent">newsletter_sign_up</field>
                     </depends>
                 </field>
             </group>
