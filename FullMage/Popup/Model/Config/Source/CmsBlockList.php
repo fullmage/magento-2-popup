@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FullMage\Popup\Model\Config\Source;
 
 class CmsBlockList implements \Magento\Framework\Option\ArrayInterface
 {
+    protected $options = null;
+    
     /**
      * Category collection factory
      *
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
      */
     protected $cmsBlockCollFactory;
-
-    protected $options = null;
 
     /**
      * Construct
@@ -24,6 +26,11 @@ class CmsBlockList implements \Magento\Framework\Option\ArrayInterface
         $this->cmsBlockCollFactory = $cmsBlockCollFactory;
     }
 
+    /**
+     * Retrieve option values array
+     *
+     * @return array
+     */
     public function toOptionArray()
     {
         if (!$this->options) {

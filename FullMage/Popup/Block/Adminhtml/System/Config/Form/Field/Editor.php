@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FullMage\Popup\Block\Adminhtml\System\Config\Form\Field;
 
 use Magento\Backend\Block\Template\Context;
@@ -28,6 +30,12 @@ class Editor extends FormField
         parent::__construct($context, $data);
     }
 
+    /**
+     * Prepare wysiwyg element HTML
+     *
+     * @param AbstractElement $element Form Element
+     * @return AbstractElement
+     */
     protected function _getElementHtml(AbstractElement $element)
     {
         $element->setWysiwyg(true);

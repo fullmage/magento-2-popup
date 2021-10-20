@@ -1,31 +1,32 @@
 <?php
-$isEnabled = $block->isEnabled();
-$popupWidth = $block->getPopupWidth() ? $block->getPopupWidth()."px" : "800px";
-$popupHeight = $block->getPopupHeight() ? $block->getPopupHeight()."px" : "500px";
-$popupHeading = $block->getPopupHeading();
-$popupMessage = $block->getPopupMessage();
-$popupContentType = $block->getPopupContentType();
-$popupCmsBlock = $block->getPopupCmsBlock();
-$isFooterEnabled = $block->isFooterEnabled();
+$popup = $block->getPopupModel();
+$isEnabled = $popup->isEnabled();
+$popupWidth = $popup->getPopupWidth() ? $popup->getPopupWidth()."px" : "800px";
+$popupHeight = $popup->getPopupHeight() ? $popup->getPopupHeight()."px" : "500px";
+$popupHeading = $popup->getPopupHeading();
+$popupMessage = $popup->getPopupMessage();
+$popupContentType = $popup->getPopupContentType();
+$popupCmsBlock = $popup->getPopupCmsBlock();
+$isFooterEnabled = $popup->isFooterEnabled();
 $imageUrl = $block->getImageUrl();
-$isShowNewsletter = $block->getShowNewsletter();
-$popupShowTime = $block->getPopupShowTime();
-$popupWhereToShow = $block->getPopupWhereToShow();
-$popupCookieExp = $block->getPopupCookieExpire();
+$isShowNewsletter = $popup->getShowNewsletter();
+$popupShowTime = $popup->getPopupShowTime();
+$popupWhereToShow = $popup->getPopupWhereToShow();
+$popupCookieExp = $popup->getPopupCookieExpire();
 $fullActionName = $block->getFullActionName();
-$buttonText = $block->getButtonText() ? $block->getButtonText() : 'Close';
-$buttonBgColor = $block->getButtonBgColor() ? "#".$block->getButtonBgColor() : '#ffffff';
-$buttonFontColor = $block->getButtonFontColor() ? "#".$block->getButtonFontColor() : '#333';
-$newsletterFontColor = $block->getNewsletterFontColor() ? "#".$block->getNewsletterFontColor() : '#ffffff';
-$newsletterButtonColor = $block->getNewsletterButtonColor() ? "#".$block->getNewsletterButtonColor() : '#1979c3';
-$newsletterPlaceholder = $block->getNewsletterPlaceholder()
-                        ? $block->getNewsletterPlaceholder()
+$buttonText = $popup->getButtonText() ? $popup->getButtonText() : 'Close';
+$buttonBgColor = $popup->getButtonBgColor() ? "#".$popup->getButtonBgColor() : '#ffffff';
+$buttonFontColor = $popup->getButtonFontColor() ? "#".$popup->getButtonFontColor() : '#333';
+$newsletterFontColor = $popup->getNewsletterFontColor() ? "#".$popup->getNewsletterFontColor() : '#ffffff';
+$newsletterButtonColor = $popup->getNewsletterButtonColor() ? "#".$popup->getNewsletterButtonColor() : '#1979c3';
+$newsletterPlaceholder = $popup->getNewsletterPlaceholder()
+                        ? $popup->getNewsletterPlaceholder()
                         : 'Enter your email address';
-$newsletterLabelText = $block->getNewsletterLabelText()
-                        ? $block->getNewsletterLabelText()
+$newsletterLabelText = $popup->getNewsletterLabelText()
+                        ? $popup->getNewsletterLabelText()
                         : 'Sign Up for Our Newsletter:';
-$newsletterButtonText = $block->getNewsletterButtonText()
-                        ? $block->getNewsletterButtonText()
+$newsletterButtonText = $popup->getNewsletterButtonText()
+                        ? $popup->getNewsletterButtonText()
                         : 'Subscribe';
 $imagePath = "none";
 $newsletterCls = "";

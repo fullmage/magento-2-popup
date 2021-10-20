@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace FullMage\Popup\Model\Config\Backend;
 
 class Image extends \Magento\Config\Model\Config\Backend\Image
