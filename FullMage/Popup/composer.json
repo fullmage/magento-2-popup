@@ -2,22 +2,27 @@
     "name": "fullmage/module-popup",
     "description": "FullMage Dynamic Popup Module for Magento 2",
     "type": "magento2-module",
-    "license": "OSL-3.0",
     "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
     "authors": [
         {
-            "name": "Mage2Gen",
-            "email": "info@mage2gen.com"
+            "name": "Fullmage",
+            "email": "hello@fullmage.com"
         }
     ],
-    "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "php": "~7.2.0||~7.3.0",
+        "magento/framework": "~100.0.*",
+        "magento/module-news": "^100.4.*"
+    },
     "autoload": {
-        "files": [
-            "registration.php"
-        ],
+        "files": [ "registration.php" ],
         "psr-4": {
             "FullMage\\Popup\\": ""
         }
     }
 }
+

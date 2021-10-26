@@ -7,7 +7,8 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="FullMage_Popup::popup_config" title="FullMage Popup Section" translate="title" />
+                            <resource id="FullMage_Popup::popup_config"
+                                      title="FullMage Popup Section" translate="title" />
                         </resource>
                     </resource>
                 </resource>

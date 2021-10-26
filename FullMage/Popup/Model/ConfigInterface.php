@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FullMage\Popup\Model;
 
+use Magento\Framework\Exception\NoSuchEntityException;
+
 interface ConfigInterface
 {
     const POPUP_ENABLED = 'popup/general/enable';
@@ -17,7 +19,7 @@ interface ConfigInterface
     const POPUP_CMS_BLOCK = 'popup/general/blockidentifer';
 
     const POPUP_MESSAGE = 'popup/general/message';
-    
+
     const POPUP_HEADING = 'popup/general/heading';
 
     const FOOTER_ENABLED = 'popup/general/show_footer';
@@ -48,6 +50,9 @@ interface ConfigInterface
 
     const POPUP_COOKIE_EXP = 'popup/general/cookieexp';
 
+    const DEFAULT_BG_COLOR = '#ffffff';
+
+    const DEFAULT_BUTTON_FONT_COLOR = '#333';
     /**
      * Get Config Value
      *
@@ -58,11 +63,13 @@ interface ConfigInterface
     public function getConfig($path, $storeId = null);
 
     /**
-     * Check if module is enabled
+     * Enabled Setting
      *
+     * @param int|null $storeId
      * @return bool
+     * @throws NoSuchEntityException
      */
-    public function isEnabled();
+    public function isEnabled(int $storeId = null): bool;
 
     /**
      * @return mixed
@@ -110,9 +117,12 @@ interface ConfigInterface
     public function getButtonBgColor();
 
     /**
-     * @return mixed
+     * Is Show newsletter
+     *
+     * @return bool
+     * @throws NoSuchEntityException
      */
-    public function getShowNewsletter();
+    public function getShowNewsletter():bool;
 
     /**
      * @return mixed
@@ -140,9 +150,12 @@ interface ConfigInterface
     public function getNewsletterButtonText();
 
     /**
-     * @return mixed
+     * Is enabled footer
+     *
+     * @return bool
+     * @throws NoSuchEntityException
      */
-    public function isFooterEnabled();
+    public function isFooterEnabled():bool;
 
     /**
      * @return mixed

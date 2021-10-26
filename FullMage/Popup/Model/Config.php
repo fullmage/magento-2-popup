@@ -1,11 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Config implements ConfigInterface
 {
@@ -13,14 +14,21 @@ class Config implements ConfigInterface
      * @var ScopeConfigInterface
      */
     private $scopeConfig;
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
 
     /**
      * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager
     ) {
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -28,6 +36,9 @@ class Config implements ConfigInterface
      */
     public function getConfig($path, $storeId = null)
     {
+        if ($storeId === null){
+            $storeId = (int) $this->storeManager->getStore()->getId();
+        }
         return $this->scopeConfig->getValue(
             $path,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
@@ -36,11 +47,30 @@ class Config implements ConfigInterface
     }
 
     /**
+     * Get Yes/no field value
+     *
+     * @param string $xmlPath
+     * @param int|null $storeId
+     * @return bool
+     * @throws NoSuchEntityException
+     */
+    private function getFlagFieldValue(string $xmlPath ,int $storeId = null): bool
+    {
+        if ($storeId === null){
+            $storeId = (int) $this->storeManager->getStore()->getId();
+        }
+        return $this->scopeConfig->isSetFlag(
+            $xmlPath,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+    }
+    /**
      * @inheridoc
      */
-    public function isEnabled()
+    public function isEnabled(int $storeId = null): bool
     {
-        return $this->getConfig(self::POPUP_ENABLED);
+        return  $this->getFlagFieldValue(self::POPUP_ENABLED,$storeId);
     }
 
     /**
@@ -104,7 +134,8 @@ class Config implements ConfigInterface
      */
     public function getButtonFontColor()
     {
-        return $this->getConfig(self::BUTTON_FONT_COLOR);
+        $configValue = $this->getConfig(self::BUTTON_FONT_COLOR);
+        return !empty($configValue)? '#'.$configValue: self::DEFAULT_BUTTON_FONT_COLOR;
     }
 
     /**
@@ -112,15 +143,16 @@ class Config implements ConfigInterface
      */
     public function getButtonBgColor()
     {
-        return $this->getConfig(self::BUTTON_BG_COLOR);
+        $configValue = $this->getConfig(self::BUTTON_BG_COLOR);
+        return !empty($configValue)? '#'.$configValue: self::DEFAULT_BG_COLOR;
     }
 
     /**
      * @inheridoc
      */
-    public function getShowNewsletter()
+    public function getShowNewsletter():bool
     {
-        return $this->getConfig(self::SHOW_NEWSLETTER);
+        return $this->getFlagFieldValue(self::SHOW_NEWSLETTER);
     }
 
     /**
@@ -166,9 +198,9 @@ class Config implements ConfigInterface
     /**
      * @inheridoc
      */
-    public function isFooterEnabled()
+    public function isFooterEnabled():bool
     {
-        return $this->getConfig(self::FOOTER_ENABLED);
+        return $this->getFlagFieldValue(self::FOOTER_ENABLED);
     }
 
     /**

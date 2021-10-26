@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Model\Config\Backend;
@@ -17,7 +16,7 @@ class Image extends \Magento\Config\Model\Config\Backend\Image
      * @var int
      */
     protected $_maxFileSize = 2048;
-    
+
    /**
     * Return path to directory for upload file
     *

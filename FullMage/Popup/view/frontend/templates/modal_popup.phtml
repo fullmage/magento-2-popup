@@ -1,24 +1,23 @@
 <?php
+/**
+ * @var $block \FullMage\Popup\Block\Popup
+ * @var $viewModel \FullMage\Popup\ViewModel\PopUpConfig
+ */
+$viewModel = $block->getViewModel();
+$configHelper = $viewModel->getConfig();
 $popup = $block->getPopupModel();
-$isEnabled = $popup->isEnabled();
 $popupWidth = $popup->getPopupWidth() ? $popup->getPopupWidth()."px" : "800px";
 $popupHeight = $popup->getPopupHeight() ? $popup->getPopupHeight()."px" : "500px";
 $popupHeading = $popup->getPopupHeading();
 $popupMessage = $popup->getPopupMessage();
-$popupContentType = $popup->getPopupContentType();
+$popupContentType = $configHelper->getPopupContentType();
 $popupCmsBlock = $popup->getPopupCmsBlock();
 $isFooterEnabled = $popup->isFooterEnabled();
 $imageUrl = $block->getImageUrl();
-$isShowNewsletter = $popup->getShowNewsletter();
-$popupShowTime = $popup->getPopupShowTime();
 $popupWhereToShow = $popup->getPopupWhereToShow();
-$popupCookieExp = $popup->getPopupCookieExpire();
-$fullActionName = $block->getFullActionName();
-$buttonText = $popup->getButtonText() ? $popup->getButtonText() : 'Close';
-$buttonBgColor = $popup->getButtonBgColor() ? "#".$popup->getButtonBgColor() : '#ffffff';
-$buttonFontColor = $popup->getButtonFontColor() ? "#".$popup->getButtonFontColor() : '#333';
 $newsletterFontColor = $popup->getNewsletterFontColor() ? "#".$popup->getNewsletterFontColor() : '#ffffff';
 $newsletterButtonColor = $popup->getNewsletterButtonColor() ? "#".$popup->getNewsletterButtonColor() : '#1979c3';
+
 $newsletterPlaceholder = $popup->getNewsletterPlaceholder()
                         ? $popup->getNewsletterPlaceholder()
                         : 'Enter your email address';
@@ -34,10 +33,11 @@ if ($popupContentType == 'newsletter_sign_up') {
     $imagePath = $block->getImageUrl();
 }
 ?>
-<?php if ($isEnabled): ?>
-    <?php if (($popupWhereToShow == "homepage" && $fullActionName == "cms_index_index")
-    || ($popupWhereToShow == "allpage")): ?>
-        <?php if ($isShowNewsletter && $popupContentType == "newsletter_sign_up"): ?>
+<?php if ($configHelper->isEnabled()): ?>
+    <?php if (
+        ($popupWhereToShow == "homepage" && $block->getFullActionName() === "cms_index_index")
+        || ($popupWhereToShow == "allpage")): ?>
+        <?php if ($configHelper->getShowNewsletter() && $popupContentType == "newsletter_sign_up"): ?>
     <div id="newsletter-model" class="newsletter-form" style="display:none;">
     <?php else: ?>
     <div id="newsletter-model" style="display:none;">
@@ -58,7 +58,7 @@ if ($popupContentType == 'newsletter_sign_up') {
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($popupContentType == "newsletter_sign_up"): ?>
-            <?php if ($isShowNewsletter): ?>
+            <?php if ($configHelper->getShowNewsletter()): ?>
             <div class="fullmage-block newsletter">
                 <div class="fullmage-content">
                     <form class="form subscribe"
@@ -97,7 +97,8 @@ if ($popupContentType == 'newsletter_sign_up') {
         <?php if ($popupContentType == "cms_block"): ?>
         <div id="popup-form-content">
             <?= $block->getLayout()->createBlock(\Magento\Cms\Block\Block::class)
-            ->setBlockId($block->getCmsBlock($popupCmsBlock)->getIdentifier())->toHtml(); ?>
+            ->setBlockId($block->getCmsBlock($configHelper->getPopupCmsBlock())
+                ->getIdentifier())->toHtml(); ?>
         </div>
         <?php endif; ?>
     </div>
@@ -108,19 +109,21 @@ if ($popupContentType == 'newsletter_sign_up') {
 {
     "*": {
         "FullMage_Popup/js/modal_popup": {
-            "isEnabled": "<?= /* @noEscape */ $isEnabled ?>",
-            "setcontent": "<?= /* @noEscape */ $popupContentType ?>",
-            "isFooterEnabled": "<?= /* @noEscape */ $isFooterEnabled ?>",
-            "buttonBgColor": "<?= /* @noEscape */ $buttonBgColor ?>",
-            "buttonFontColor": "<?= /* @noEscape */ $buttonFontColor ?>",
-            "buttonText": "<?= /* @noEscape */ $buttonText ?>",
-            "popupShowTime": "<?= /* @noEscape */ $popupShowTime ?>",
-            "popupCookieExp": "<?= /* @noEscape */ $popupCookieExp ?>"
+            "isEnabled": "<?= $block->escapeJs($configHelper->isEnabled()) ?>",
+            "setcontent": "<?= $block->escapeJs($configHelper->getPopupContentType()) ?>",
+            "isFooterEnabled": "<?= $block->escapeJs($configHelper->isFooterEnabled()) ?>",
+            "buttonBgColor": "<?= /* @noEscape */ $configHelper->getButtonBgColor() ?>",
+            "buttonFontColor": "<?= /* @noEscape */ $configHelper->getButtonFontColor() ?>",
+            "buttonText": "<?= $block->escapeJs(
+                empty($configHelper->getButtonText())?$configHelper->getButtonText():__('Close')
+    ) ?>",
+            "popupShowTime": "<?= $block->escapeJs($configHelper->getPopupShowTime()) ?>",
+            "popupCookieExp": "<?= $block->escapeJs($configHelper->getPopupCookieExpire()) ?>"
         }
     }
 }
 </script>
-<?php if ($isShowNewsletter): ?>
+<?php if ($configHelper->getShowNewsletter()): ?>
 <script type="text/x-magento-init">
     {
         "*": {
@@ -156,9 +159,9 @@ if ($popupContentType == 'newsletter_sign_up') {
 }
 .modal-popup.fullmage-popup .modal-footer .fullmage-popup-btn-action
 {
-    background: <?= /* @noEscape */ $buttonBgColor; ?>;
+    background: <?= /* @noEscape */ $configHelper->getButtonBgColor(); ?>;
     color: <?= /* @noEscape */ $buttonFontColor; ?>;
-    border: 1px solid <?= /* @noEscape */ $buttonBgColor; ?>;
+    border: 1px solid <?= /* @noEscape */ $configHelper->getButtonBgColor(); ?>;
 }
 .newsletter-form {
     transform: translateX(-50%);
@@ -182,7 +185,7 @@ if ($popupContentType == 'newsletter_sign_up') {
     margin: 0 auto 20px;
     display: block;
     font-weight: bold;
-    
+
 }
 .fullmage-content .form.subscribe #newsletter {
     margin-bottom: 12px;
@@ -195,16 +198,16 @@ if ($popupContentType == 'newsletter_sign_up') {
   width: 5px;
 }
 .fullmage-popup .modal-content::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 1px grey; 
+  box-shadow: inset 0 0 1px grey;
   border-radius: 2px;
   background: #ddd;
 }
 .fullmage-popup .modal-content::-webkit-scrollbar-thumb {
-  background: #666; 
+  background: #666;
   border-radius: 2px;
 }
 .fullmage-popup .modal-content::-webkit-scrollbar-thumb:hover {
-  background: #666; 
+  background: #666;
 }
 .fullmage-popup .action.popup-subscribe {
     background: <?= /* @noEscape */ $newsletterButtonColor; ?>;

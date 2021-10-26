@@ -1,16 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Block;
 
 use Magento\Framework\Data\Form\Element\AbstractElement;
+use Magento\Config\Block\System\Config\Form\Field;
 
-class Color extends \Magento\Config\Block\System\Config\Form\Field
+class Color extends Field
 {
     /**
-     * @param AbstractElement $element
-     * @return string
+     * @inheirtDoc
      */
     protected function _getElementHtml(AbstractElement $element)
     {

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Block\Adminhtml\System\Config\Form\Field;
@@ -15,7 +14,7 @@ class Editor extends FormField
      * @var WysiwygConfig
      */
     protected $wysiwygConfig;
-    
+
     /**
      * @param Context       $context
      * @param WysiwygConfig $wysiwygConfig

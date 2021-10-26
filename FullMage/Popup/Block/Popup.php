@@ -1,70 +1,76 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Block;
 
+use FullMage\Popup\Model\Config;
+use Magento\Cms\Model\BlockFactory;
+use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Popup extends \Magento\Framework\View\Element\Template
 {
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Cms\Model\Template\FilterProvider
+     * @var FilterProvider
      */
     protected $filterProvider;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
-     * @var \Magento\Cms\Model\BlockFactory
+     * @var BlockFactory
      */
     protected $blockFactory;
 
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
-     * @var \FullMage\Popup\Model\Config
+     * @var Config
      */
     protected $popupModel;
 
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Cms\Model\Template\FilterProvider $filterProvider
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Cms\Model\BlockFactory $blockFactory
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \FullMage\Popup\Model\Config $popupModel
+     * @param ScopeConfigInterface $scopeConfig
+     * @param FilterProvider $filterProvider
+     * @param StoreManagerInterface $storeManager
+     * @param BlockFactory $blockFactory
+     * @param Http $request
+     * @param Config $config
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Cms\Model\Template\FilterProvider $filterProvider,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Cms\Model\BlockFactory $blockFactory,
-        \Magento\Framework\App\Request\Http $request,
-        \FullMage\Popup\Model\Config $popupModel,
-        array $data = []
+        ScopeConfigInterface                             $scopeConfig,
+        FilterProvider                                   $filterProvider,
+        StoreManagerInterface                            $storeManager,
+        BlockFactory                                     $blockFactory,
+        Http                                             $request,
+        Config                                           $config,
+        array                                            $data = []
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->filterProvider = $filterProvider;
         $this->storeManager = $storeManager;
         $this->blockFactory = $blockFactory;
         $this->request = $request;
-        $this->popupModel = $popupModel;
+        $this->popupModel = $config;
         parent::__construct($context, $data);
     }
 
@@ -75,7 +81,7 @@ class Popup extends \Magento\Framework\View\Element\Template
      */
     public function getFormActionUrl()
     {
-        return $this->getUrl('newsletter/subscriber/new', ['_secure' => true]);
+        return $this->getUrl('newsletter/subscriber/new');
     }
 
     /**
@@ -85,7 +91,7 @@ class Popup extends \Magento\Framework\View\Element\Template
      */
     public function getImageUrl()
     {
-        $imagePath = $this->getPopupModel()->getConfig(\FullMage\Popup\Model\Config::IMAGE_UPLOAD);
+        $imagePath = $this->getPopupModel()->getConfig(Config::IMAGE_UPLOAD);
         $mediaPath = $this->storeManager->getStore()->getBaseUrl(UrlInterface::URL_TYPE_MEDIA);
         return $mediaPath.'popup/'.$imagePath;
     }
@@ -106,8 +112,8 @@ class Popup extends \Magento\Framework\View\Element\Template
      * Get CMS Block
      *
      * @param int $blockId
-     * @return bool|\Magento\Cms\Model\BlockFactory
-     * @throws \NoSuchEntityException
+     * @return bool|BlockFactory
+     * @throws NoSuchEntityException
      */
     public function getCmsBlock($blockId)
     {
@@ -123,8 +129,7 @@ class Popup extends \Magento\Framework\View\Element\Template
     /**
      * Get Full Action Name
      *
-     * @return \Magento\Framework\App\Request\Http
-     * @throws \NoSuchEntityException
+     * @return string
      */
     public function getFullActionName()
     {
@@ -134,7 +139,7 @@ class Popup extends \Magento\Framework\View\Element\Template
     /**
      * Get Full Action Name
      *
-     * @return \FullMage\Popup\Model\Config
+     * @return Config
      */
     public function getPopupModel()
     {

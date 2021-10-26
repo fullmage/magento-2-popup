@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="fullmage" translate="label" sortOrder="10" class="fullmage-tab">
+        <tab id="fullmage" translate="label" sortOrder="300" class="fullmage-tab">
             <label>FullMage</label>
         </tab>
         <section id="popup" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">

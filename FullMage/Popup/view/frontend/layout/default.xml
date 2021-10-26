@@ -6,9 +6,15 @@
     </head> -->
     <body>
         <referenceContainer name="before.body.end">
-            <block 	class="FullMage\Popup\Block\Popup" after="-"
+            <block 	class="FullMage\Popup\Block\Popup"
+                      after="-"
             		name="fullmage_custom_popup"
-            		template="FullMage_Popup::modal_popup.phtml" />
+                      template="FullMage_Popup::modal_popup.phtml" >
+                <arguments>
+                    <argument name="view_model"
+                              xsi:type="object">FullMage\Popup\ViewModel\PopUpConfig</argument>
+                </arguments>
+            </block>
         </referenceContainer>
     </body>
 </page>
