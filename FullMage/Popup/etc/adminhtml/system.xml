@@ -104,7 +104,7 @@
                 </field>
                 <field id="button_color_field" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Background Color</label>
-                    <comment><![CDATA[Select Footer Button Background Color]]></comment>
+                    <comment><![CDATA[Enter Footer Button Background Color as Hex code.Example: #FF5733,##3368FF]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
                     <depends>
                         <field id="show_footer">1</field>
@@ -112,7 +112,7 @@
                 </field>
                 <field id="button_font_color_field" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Button Font Color</label>
-                    <comment><![CDATA[Select Footer Button Font Color]]></comment>
+                    <comment><![CDATA[Enter Footer Button Font Color as hex code.Example: #FF5733,##3368FF]]></comment>
                     <frontend_model>FullMage\Popup\Block\Color</frontend_model>
                     <depends>
                         <field id="show_footer">1</field>

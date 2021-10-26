@@ -5,28 +5,8 @@
  */
 $viewModel = $block->getViewModel();
 $configHelper = $viewModel->getConfig();
-$popup = $block->getPopupModel();
-$popupWidth = $popup->getPopupWidth() ? $popup->getPopupWidth()."px" : "800px";
-$popupHeight = $popup->getPopupHeight() ? $popup->getPopupHeight()."px" : "500px";
-$popupHeading = $popup->getPopupHeading();
-$popupMessage = $popup->getPopupMessage();
 $popupContentType = $configHelper->getPopupContentType();
-$popupCmsBlock = $popup->getPopupCmsBlock();
-$isFooterEnabled = $popup->isFooterEnabled();
-$imageUrl = $block->getImageUrl();
-$popupWhereToShow = $popup->getPopupWhereToShow();
-$newsletterFontColor = $popup->getNewsletterFontColor() ? "#".$popup->getNewsletterFontColor() : '#ffffff';
-$newsletterButtonColor = $popup->getNewsletterButtonColor() ? "#".$popup->getNewsletterButtonColor() : '#1979c3';
-
-$newsletterPlaceholder = $popup->getNewsletterPlaceholder()
-                        ? $popup->getNewsletterPlaceholder()
-                        : 'Enter your email address';
-$newsletterLabelText = $popup->getNewsletterLabelText()
-                        ? $popup->getNewsletterLabelText()
-                        : 'Sign Up for Our Newsletter:';
-$newsletterButtonText = $popup->getNewsletterButtonText()
-                        ? $popup->getNewsletterButtonText()
-                        : 'Subscribe';
+$popupWhereToShow = $configHelper->getPopupWhereToShow();
 $imagePath = "none";
 $newsletterCls = "";
 if ($popupContentType == 'newsletter_sign_up') {
@@ -34,8 +14,7 @@ if ($popupContentType == 'newsletter_sign_up') {
 }
 ?>
 <?php if ($configHelper->isEnabled()): ?>
-    <?php if (
-        ($popupWhereToShow == "homepage" && $block->getFullActionName() === "cms_index_index")
+    <?php if (($popupWhereToShow == "homepage" && $block->getFullActionName() === "cms_index_index")
         || ($popupWhereToShow == "allpage")): ?>
         <?php if ($configHelper->getShowNewsletter() && $popupContentType == "newsletter_sign_up"): ?>
     <div id="newsletter-model" class="newsletter-form" style="display:none;">
@@ -44,15 +23,15 @@ if ($popupContentType == 'newsletter_sign_up') {
     <?php endif; ?>
     <div class="popup_message">
         <?php if ($popupContentType == 'custom'): ?>
-            <?php if ($popupHeading): ?>
+            <?php if (!empty($configHelper->getPopupHeading())): ?>
             <div id="popup-heading" class="popup-heading">
-                <?= /* @noEscape */ $block->getWyswingContent($popupHeading); ?>
+                <?= /* @noEscape */ $block->getWyswingContent($configHelper->getPopupHeading()); ?>
             </div>
             <?php endif; ?>
-            <?php if ($popupMessage): ?>
+            <?php if (!empty($configHelper->getPopupMessage())): ?>
             <div id="popup-form-content" class="popup-form-content">
                 <div id="popup-text">
-                    <?= /* @noEscape */ $block->getWyswingContent($popupMessage); ?>
+                    <?= /* @noEscape */ $block->getWyswingContent($configHelper->getPopupMessage()); ?>
                 </div>
             </div>
             <?php endif; ?>
@@ -71,22 +50,22 @@ if ($popupContentType == 'newsletter_sign_up') {
                             <div class="control">
                                 <label for="newsletter">
                                     <span class="label">
-                                        <?= $block->escapeHtml(__($newsletterLabelText)) ?>
+                                        <?= $block->escapeHtml(__($configHelper->getNewsletterLabelText())) ?>
                                     </span>
                                     <input name="email" type="email" id="newsletter"
-                                           placeholder="<?= $block->escapeHtml(__($newsletterPlaceholder)) ?>"
-                                           data-mage-init='{"mage/trim-input":{}}'
-                                           data-validate="{required:true, 'validate-email':true}"
+                                       placeholder="<?= $block->escapeHtml($configHelper->getNewsletterPlaceholder())?>"
+                                       data-mage-init='{"mage/trim-input":{}}'
+                                       data-validate="{required:true, 'validate-email':true}"
                                     />
                                 </label>
                             </div>
                         </div>
                         <div class="actions">
                             <button class="action popup-subscribe primary"
-                                    title="<?= $block->escapeHtmlAttr(__($newsletterButtonText)) ?>"
+                                    title="<?= $block->escapeHtmlAttr(__($configHelper->getNewsletterButtonText())) ?>"
                                     type="submit"
                                     aria-label="Subscribe">
-                                <span><?= $block->escapeHtml(__($newsletterButtonText)) ?></span>
+                                <span><?= $block->escapeHtml(__($configHelper->getNewsletterButtonText())) ?></span>
                             </button>
                         </div>
                     </form>
@@ -116,7 +95,7 @@ if ($popupContentType == 'newsletter_sign_up') {
             "buttonFontColor": "<?= /* @noEscape */ $configHelper->getButtonFontColor() ?>",
             "buttonText": "<?= $block->escapeJs(
                 empty($configHelper->getButtonText())?$configHelper->getButtonText():__('Close')
-    ) ?>",
+            ) ?>",
             "popupShowTime": "<?= $block->escapeJs($configHelper->getPopupShowTime()) ?>",
             "popupCookieExp": "<?= $block->escapeJs($configHelper->getPopupCookieExpire()) ?>"
         }
@@ -139,9 +118,9 @@ if ($popupContentType == 'newsletter_sign_up') {
     top: 50%;
     transform: translateY(-50%);
     margin: 0 auto;
-    max-width: <?= /* @noEscape */ $popupWidth; ?>;
+    max-width: <?= /* @noEscape */ $configHelper->getPopupWidth(); ?>;
     background-image: url(<?= /* @noEscape */ $imagePath; ?>);
-    height: <?= /* @noEscape */ $popupHeight; ?>;
+    height: <?= /* @noEscape */ $configHelper->getPopupWidth(); ?>;
     max-height: 90%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -160,7 +139,7 @@ if ($popupContentType == 'newsletter_sign_up') {
 .modal-popup.fullmage-popup .modal-footer .fullmage-popup-btn-action
 {
     background: <?= /* @noEscape */ $configHelper->getButtonBgColor(); ?>;
-    color: <?= /* @noEscape */ $buttonFontColor; ?>;
+    color: <?= /* @noEscape */ $configHelper->getButtonFontColor() ?>;
     border: 1px solid <?= /* @noEscape */ $configHelper->getButtonBgColor(); ?>;
 }
 .newsletter-form {
@@ -210,8 +189,9 @@ if ($popupContentType == 'newsletter_sign_up') {
   background: #666;
 }
 .fullmage-popup .action.popup-subscribe {
-    background: <?= /* @noEscape */ $newsletterButtonColor; ?>;
-    border: 1px solid <?= /* @noEscape */ $newsletterButtonColor; ?>;
+    background: <?= /* @noEscape */ $configHelper->getNewsletterButtonColor(); ?>;
+    border: 1px solid <?= /* @noEscape */ $configHelper->getNewsletterButtonColor();
+    ; ?>;
     margin: 0 auto;
     display: block;
 }

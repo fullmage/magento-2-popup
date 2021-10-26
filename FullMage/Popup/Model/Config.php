@@ -36,7 +36,7 @@ class Config implements ConfigInterface
      */
     public function getConfig($path, $storeId = null)
     {
-        if ($storeId === null){
+        if ($storeId === null) {
             $storeId = (int) $this->storeManager->getStore()->getId();
         }
         return $this->scopeConfig->getValue(
@@ -54,9 +54,9 @@ class Config implements ConfigInterface
      * @return bool
      * @throws NoSuchEntityException
      */
-    private function getFlagFieldValue(string $xmlPath ,int $storeId = null): bool
+    private function getFlagFieldValue(string $xmlPath, int $storeId = null): bool
     {
-        if ($storeId === null){
+        if ($storeId === null) {
             $storeId = (int) $this->storeManager->getStore()->getId();
         }
         return $this->scopeConfig->isSetFlag(
@@ -70,7 +70,7 @@ class Config implements ConfigInterface
      */
     public function isEnabled(int $storeId = null): bool
     {
-        return  $this->getFlagFieldValue(self::POPUP_ENABLED,$storeId);
+        return  $this->getFlagFieldValue(self::POPUP_ENABLED, $storeId);
     }
 
     /**
@@ -78,7 +78,8 @@ class Config implements ConfigInterface
      */
     public function getPopupWidth()
     {
-        return $this->getConfig(self::POPUP_WIDTH);
+        $value =  $this->getConfig(self::POPUP_WIDTH);
+        return !empty($value)? $value.'px': '800px';
     }
 
     /**
@@ -86,7 +87,8 @@ class Config implements ConfigInterface
      */
     public function getPopupHeight()
     {
-        return $this->getConfig(self::POPUP_HEIGHT);
+        $value =  $this->getConfig(self::POPUP_HEIGHT);
+        return !empty($value)? $value.'px': '500px';
     }
 
     /**
@@ -168,7 +170,8 @@ class Config implements ConfigInterface
      */
     public function getNewsletterButtonColor()
     {
-        return $this->getConfig(self::NEWSLETTER_BUTTON_FONT);
+        $value=  $this->getConfig(self::NEWSLETTER_BUTTON_FONT);
+        return !empty($value)? '#'.$value:'#1979c3';
     }
 
     /**
@@ -176,7 +179,8 @@ class Config implements ConfigInterface
      */
     public function getNewsletterPlaceholder()
     {
-        return $this->getConfig(self::NEWSLETTER_PLACEHOLDER);
+        $value =  $this->getConfig(self::NEWSLETTER_PLACEHOLDER);
+        return !empty($value)? $value: __('Enter your email address');
     }
 
     /**
@@ -184,7 +188,8 @@ class Config implements ConfigInterface
      */
     public function getNewsletterLabelText()
     {
-        return $this->getConfig(self::NEWSLETTER_LABEL_TEXT);
+        $value =  $this->getConfig(self::NEWSLETTER_LABEL_TEXT);
+        return !empty($value)? $value: __('Sign Up for Our Newsletter:');
     }
 
     /**
@@ -192,7 +197,8 @@ class Config implements ConfigInterface
      */
     public function getNewsletterButtonText()
     {
-        return $this->getConfig(self::NEWSLETTER_BUTTON_TEXT);
+        $value =  $this->getConfig(self::NEWSLETTER_BUTTON_TEXT);
+        return !empty($value)? $value: __('Subscribe');
     }
 
     /**

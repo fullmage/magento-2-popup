@@ -16,7 +16,7 @@
     "require": {
         "php": "~7.2.0||~7.3.0",
         "magento/framework": "~100.0.*",
-        "magento/module-news": "^100.4.*"
+        "magento/module-newsletter": "^100.4.*"
     },
     "autoload": {
         "files": [ "registration.php" ],
