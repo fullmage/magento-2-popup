@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace FullMage\Popup\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Config implements ConfigInterface
@@ -20,6 +18,8 @@ class Config implements ConfigInterface
     private $storeManager;
 
     /**
+     * Construct  method
+     *
      * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
      */
@@ -32,7 +32,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getConfig($path, $storeId = null)
     {
@@ -47,12 +47,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * Get Yes/no field value
-     *
-     * @param string $xmlPath
-     * @param int|null $storeId
-     * @return bool
-     * @throws NoSuchEntityException
+     * @inheritdoc
      */
     private function getFlagFieldValue(string $xmlPath, int $storeId = null): bool
     {
@@ -66,7 +61,7 @@ class Config implements ConfigInterface
         );
     }
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function isEnabled(int $storeId = null): bool
     {
@@ -74,7 +69,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupWidth()
     {
@@ -83,7 +78,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupHeight()
     {
@@ -92,7 +87,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupHeading()
     {
@@ -100,7 +95,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupMessage()
     {
@@ -108,7 +103,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupCmsBlock()
     {
@@ -116,7 +111,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupContentType()
     {
@@ -124,7 +119,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getButtonText()
     {
@@ -132,7 +127,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getButtonFontColor()
     {
@@ -141,7 +136,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getButtonBgColor()
     {
@@ -150,7 +145,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getShowNewsletter():bool
     {
@@ -158,7 +153,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getNewsletterFontColor()
     {
@@ -167,7 +162,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getNewsletterButtonColor()
     {
@@ -176,7 +171,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getNewsletterPlaceholder()
     {
@@ -185,7 +180,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getNewsletterLabelText()
     {
@@ -194,7 +189,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getNewsletterButtonText()
     {
@@ -203,7 +198,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function isFooterEnabled():bool
     {
@@ -211,7 +206,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupShowTime()
     {
@@ -219,7 +214,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupWhereToShow()
     {
@@ -227,7 +222,7 @@ class Config implements ConfigInterface
     }
 
     /**
-     * @inheridoc
+     * @inheritdoc
      */
     public function getPopupCookieExpire()
     {

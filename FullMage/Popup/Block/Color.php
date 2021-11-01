@@ -6,10 +6,13 @@ namespace FullMage\Popup\Block;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Config\Block\System\Config\Form\Field;
 
+/**
+ * Color Class for admin Setting
+ */
 class Color extends Field
 {
     /**
-     * @inheirtDoc
+     * @inheritdoc
      */
     protected function _getElementHtml(AbstractElement $element)
     {

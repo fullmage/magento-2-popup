@@ -74,46 +74,64 @@ interface ConfigInterface
     public function isEnabled(int $storeId = null): bool;
 
     /**
+     * Get Popup width
+     *
      * @return mixed
      */
     public function getPopupWidth();
 
     /**
+     * Get Pop-up height
+     *
      * @return mixed
      */
     public function getPopupHeight();
 
     /**
+     * Get Popup  Heading
+     *
      * @return mixed
      */
     public function getPopupHeading();
 
     /**
+     * Pop Message
+     *
      * @return mixed
      */
     public function getPopupMessage();
 
     /**
+     * Pop cms block
+     *
      * @return mixed
      */
     public function getPopupCmsBlock();
 
     /**
+     * Get pop content type
+     *
      * @return mixed
      */
     public function getPopupContentType();
 
     /**
+     * Get Button text
+     *
      * @return mixed
      */
     public function getButtonText();
 
     /**
+     * Get Button Front Color
+     *
      * @return mixed
      */
     public function getButtonFontColor();
 
     /**
+     * Button background color
+     *
      * @return mixed
      */
     public function getButtonBgColor();
@@ -127,26 +145,36 @@ interface ConfigInterface
     public function getShowNewsletter():bool;
 
     /**
+     * Newsletter font color
+     *
      * @return mixed
      */
     public function getNewsletterFontColor();
 
     /**
+     * Newsletter button color
+     *
      * @return mixed
      */
     public function getNewsletterButtonColor();
 
     /**
+     * Newsletter placeholder
+     *
      * @return mixed
      */
     public function getNewsletterPlaceholder();
 
     /**
+     * Newsletter label text
+     *
      * @return mixed
      */
     public function getNewsletterLabelText();
 
     /**
+     * Newsletter button text
+     *
      * @return mixed
      */
     public function getNewsletterButtonText();
@@ -160,16 +188,22 @@ interface ConfigInterface
     public function isFooterEnabled():bool;
 
     /**
+     * POPUP show time
+     *
      * @return mixed
      */
     public function getPopupShowTime();
 
     /**
+     * Pop position
+     *
      * @return mixed
      */
     public function getPopupWhereToShow();
 
     /**
+     * Popup Cookie Expire
+     *
      * @return mixed
      */
     public function getPopupCookieExpire();

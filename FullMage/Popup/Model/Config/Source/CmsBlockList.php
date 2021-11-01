@@ -1,13 +1,18 @@
 <?php
-
 declare(strict_types=1);
 
 namespace FullMage\Popup\Model\Config\Source;
 
+/**
+ * Cms blocks dropdown
+ */
 class CmsBlockList implements \Magento\Framework\Option\ArrayInterface
 {
+    /**
+     * @var array|null
+     */
     protected $options = null;
-    
+
     /**
      * Category collection factory
      *

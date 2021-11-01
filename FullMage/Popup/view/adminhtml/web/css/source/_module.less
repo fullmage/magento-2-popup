@@ -1,14 +1,24 @@
-.config-nav .fullmage-tab .admin__page-nav-title:before {
-    content: '';
-    background-image: url('FullMage_Popup::images/fullmage_logo.png');
-    background-repeat: no-repeat;
-    background-size: 60px;
-    background-position: 0 0;
-    height: 57px;
-    position: absolute;
-    width: 257px;
-}
-
-.config-nav .fullmage-tab .admin__page-nav-title strong {
-    margin-left: 70px;
+/**
+* @codingStandardsIgnoreFile
+ */
+& when (@media-common = true) {
+    .config-nav {
+        .fullmage-tab {
+            .admin__page-nav-title {
+                &:before {
+                    content: '';
+                    background-image: url('FullMage_Popup::images/fullmage_logo.png');
+                    background-repeat: no-repeat;
+                    background-size: 60px;
+                    background-position: 0 0;
+                    height: 57px;
+                    position: absolute;
+                    width: 257px;
+                }
+                strong {
+                    margin-left: 70px;
+                }
+            }
+        }
+    }
 }
