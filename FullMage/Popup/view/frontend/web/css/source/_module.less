@@ -1,89 +1,99 @@
-// /**
-//  * Copyright © Magento, Inc. All rights reserved.
-//  * See COPYING.txt for license details.
-//  */
-
 //
 //  Common
 //  _____________________________________________
 
 & when (@media-common = true) {
-	.modal-popup.fullmage-popup {
-		.modal-inner-wrap {
-			top: 50%;
-			transform: translateY(-50%);
-			margin: 0 auto;
-			max-height: 90%;
-			background-repeat: no-repeat;
-			background-size: cover;
-			position: relative;
-		}
-		.action-close {
-			background: #333;
-			margin: 0;
-			padding: 1rem 1.2rem;
-			border-radius: 0;
-			color: #fff;
-			&:before {
-				color: #fff;
-			}
-		}
-	}
-	.newsletter-form {
-		transform: translateX(-50%);
-		display: block;
-		margin: 0 auto;
-		max-width: 300px;
-		position: absolute;
-		bottom: 20%;
-		left: 50%;
-	}
-	.popup-heading {
-		margin-bottom: 5%;
-	}
-	.fullmage-content {
-		.form.subscribe {
-			max-width: 400px;
-			min-width: 300px;
-			.label {
-				font-size: 2rem;
-				text-align: center;
-				margin: 0 auto 20px;
-				display: block;
-				font-weight: bold;
-			}
-			#newsletter {
-				margin-bottom: 12px;
-			}
-		}
-		.action.subscribe.primary {
-			width: 100%;
-			text-align: center;
-		}
-	}
-	.fullmage-popup {
-		.modal-content {
-			&::-webkit-scrollbar {
-				width: 5px;
-			}
-			&::-webkit-scrollbar-track {
-				box-shadow: inset 0 0 1px grey;
-				border-radius: 2px;
-				background: #ddd;
-			}
-			&::-webkit-scrollbar-thumb {
-				background: #666;
-				border-radius: 2px;
-				&:hover {
-					background: #666;
-				}
-			}
-		}
-		.action.popup-subscribe {
-			margin: 0 auto;
-			display: block;
-		}
-	}
+    .modal-popup {
+        &.fullmage-popup {
+            .modal-inner-wrap {
+                top: 50%;
+                transform: translateY(-50%);
+                margin: 0 auto;
+                max-height: 90%;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+
+            .action-close {
+                background: #333;
+                margin: 0;
+                padding: 1rem 1.2rem;
+                border-radius: 0;
+                color: #fff;
+
+                &:before {
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .newsletter-form {
+        transform: translateX(-50%);
+        display: block;
+        margin: 0 auto;
+        max-width: 300px;
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+    }
+
+    .popup-heading {
+        margin-bottom: 5%;
+    }
+
+    .fullmage-content {
+        .form.subscribe {
+            max-width: 400px;
+            min-width: 300px;
+
+            .label {
+                font-size: 2rem;
+                text-align: center;
+                margin: 0 auto 20px;
+                display: block;
+                font-weight: bold;
+            }
+
+            #newsletter {
+                margin-bottom: 12px;
+            }
+        }
+
+        .action.subscribe.primary {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    .fullmage-popup {
+        .modal-content {
+            &::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            &::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 1px grey;
+                border-radius: 2px;
+                background: #ddd;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #666;
+                border-radius: 2px;
+
+                &:hover {
+                    background: #666;
+                }
+            }
+        }
+
+        .action.popup-subscribe {
+            margin: 0 auto;
+            display: block;
+        }
+    }
 }
 
 //
@@ -91,18 +101,21 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
-	.fullmage-popup.modal-slide {
-		left: auto;
-		right: 0;
-		width: 95%;
-	}
-	.fullmage-popup {
-		.modal-content {
-			padding-left: 1.5rem;
-			padding-right: 1.5rem;
-			ul {
-				padding-left: 2.5rem;
-			}
-		}
-	}
+    .fullmage-popup {
+        &.modal-slide {
+            left: auto;
+            right: 0;
+            width: 95%;
+        }
+    }
+    .fullmage-popup {
+        .modal-content {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+
+            ul {
+                padding-left: 2.5rem;
+            }
+        }
+    }
 }

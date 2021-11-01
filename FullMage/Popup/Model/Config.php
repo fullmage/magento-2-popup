@@ -162,7 +162,8 @@ class Config implements ConfigInterface
      */
     public function getNewsletterFontColor()
     {
-        return $this->getConfig(self::NEWSLETTER_FONT_COLOR);
+        $configValue = $this->getConfig(self::NEWSLETTER_FONT_COLOR);
+        return !empty($configValue)? '#'.$configValue: self::DEFAULT_NEWSLETTER_FONT_COLOR;
     }
 
     /**

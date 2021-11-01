@@ -53,6 +53,8 @@ interface ConfigInterface
     const DEFAULT_BG_COLOR = '#ffffff';
 
     const DEFAULT_BUTTON_FONT_COLOR = '#333';
+
+    const DEFAULT_NEWSLETTER_FONT_COLOR = '#ffffff';
     /**
      * Get Config Value
      *
