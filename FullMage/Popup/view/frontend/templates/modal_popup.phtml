@@ -94,7 +94,7 @@ if ($popupContentType == 'newsletter_sign_up') {
             "buttonBgColor": "<?= /* @noEscape */ $configHelper->getButtonBgColor() ?>",
             "buttonFontColor": "<?= /* @noEscape */ $configHelper->getButtonFontColor() ?>",
             "buttonText": "<?= $block->escapeJs(
-                empty($configHelper->getButtonText())?$configHelper->getButtonText():__('Close')
+                !empty($configHelper->getButtonText())?$configHelper->getButtonText():__('Close')
             ) ?>",
             "popupShowTime": "<?= $block->escapeJs($configHelper->getPopupShowTime()) ?>",
             "popupCookieExp": "<?= $block->escapeJs($configHelper->getPopupCookieExpire()) ?>"

@@ -4,7 +4,7 @@
     "description": "FullMage Dynamic Popup Module for Magento 2",
     "type": "magento2-module",
     "require": {
-        "magento/module-newsletter": "100.3.*"
+        "magento/module-newsletter": "100.3.*||100.4.*"
     },
     "license": [
         "Open Software License (OSL)"

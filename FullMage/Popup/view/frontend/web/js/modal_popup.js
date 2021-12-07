@@ -5,7 +5,7 @@ define([
     'use strict';
 
     return function (config) {
-        if (config.isEnabled == 1) {
+        if (config.isEnabled === "1") {
             var options = {
                 type: 'popup',
                 responsive: true,
@@ -20,22 +20,16 @@ define([
                     }
                 }],
                 opened: function ($Event) {
-                    if (config.isFooterEnabled == 1 && config.setcontent != "newsletter_sign_up") {
+                    if (config.isFooterEnabled === "1" && config.setcontent !== "newsletter_sign_up") {
                         $(".modal-footer").show();
                     } else {
                         $(".modal-footer").hide();
                     }
-                    var popupShowTime = config.popupShowTime;
-                    if (popupShowTime != "") {
-                        setTimeout(function () {
-                            $("#newsletter-model").modal("closeModal");
-                            setLocalStorage();
-                        }, 3000);
-                    }
                 },
                 closed: function () {
+                    console.log('closed');
                     setCookie('fullmage_custom_popup', 1, 1);
-                    setLocalStorage();
+                    setNextPopOpenTime();
                 }
             };
 
@@ -60,43 +54,59 @@ define([
                 return null;
             };
 
-            function setLocalStorage() {
-                if (config.popupCookieExp != "") {
+            function setNextPopOpenTime() {
+                if (config.popupCookieExp && (config.popupCookieExp != "")) {
                     var date = new Date();
                     date.setDate(date.getDate() + parseInt(config.popupCookieExp));
                     var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
                         .toISOString()
                         .split("T")[0];
-                    if (localStorage.getItem('expiredate') == null) {
-                        localStorage.setItem('expiredate', dateString);
-                    }
+                    localStorage.setItem('fullmage_popup_expire_date', dateString);
                 }
-            };
+            }
 
             var popup = modal(options, $('#newsletter-model')),
                 CurrentDate = new Date(),
-                 GivenDate = localStorage.getItem('expiredate');
-            if (config.popupCookieExp != "") {
-                if (GivenDate < CurrentDate) {
-                    $("#newsletter-model").modal("openModal");
+                GivenDate = localStorage.getItem('fullmage_popup_expire_date');
+            // Open pop after x days
+            if (config.popupCookieExp != "" && (getCookie('fullmage_custom_popup') === '1')) {
+                if ((new Date(GivenDate)) < CurrentDate) {
+                    if((typeof config.popupShowTime !== 'undefined') && (config.popupShowTime)) {
+                        // Pop open after x seconds
+                        setTimeout(function () {
+                            $("#newsletter-model").modal("openModal");
+                            setNextPopOpenTime();
+                        }, parseInt(config.popupShowTime*1000));
+                    }else{
+                        $("#newsletter-model").modal("openModal");
+
+                    }
                 }
             }
 
             if (getCookie('fullmage_custom_popup') == null) {
-                $("#newsletter-model").modal("openModal");
+                if((typeof config.popupShowTime !== 'undefined') && (config.popupShowTime)) {
+                    // Pop open after x seconds
+                    setTimeout(function () {
+                        $("#newsletter-model").modal("openModal");
+                        setNextPopOpenTime();
+                    }, parseInt(config.popupShowTime*1000));
+                }else{
+                    $("#newsletter-model").modal("openModal");
+                }
             }
             $('#fullmage-newsletter-validate-detail').submit(function () {
                 if ($('#fullmage-newsletter-validate-detail').validation('isValid')) {
                     $("#newsletter-model").modal("closeModal");
                     setCookie('fullmage_custom_popup', 1, 1);
-                    setLocalStorage();
+                    setNextPopOpenTime();
                 }
             });
             $(document).keydown(function (event) {
                 if (event.keyCode == 27) {
                     $("#newsletter-model").modal("closeModal");
                     setCookie('fullmage_custom_popup', 1, 1);
-                    setLocalStorage();
+                    setNextPopOpenTime();
                 }
             });
         }

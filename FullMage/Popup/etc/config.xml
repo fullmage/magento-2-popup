@@ -4,7 +4,9 @@
     <default>
         <popup>
             <general>
+                <enable>0</enable>
                 <show_newsletter>0</show_newsletter>
+                <show_footer>0</show_footer>
             </general>
         </popup>
     </default>
